@@ -1,6 +1,6 @@
 # Site wide configuration
 
-title:            Site Title
+title:            Abinash Koirala
 locale:           en_US
 url:
 
@@ -41,10 +41,10 @@ titlecase: true
 
 # Site owner
 owner:
-  name: Your Name
+  name: Abinash Koirala
   avatar: bio-photo.jpg
-  bio: "Describe your self."
-  email:
+  bio: "Full stack software engineer currently pursuing Masters of Science in Information Technology at Rensselaer Polytechnic Institute. Experienced in each stages SDLC of enterprise web application. Currently interested in Data Science and Analytics apart from Software Development."
+  email: koirala.abinash@gmail.com
   disqus-shortname:
   twitter: #username
   facebook: #username
@@ -55,9 +55,9 @@ owner:
     ad-client:
     ad-slot:
   bing-verify:
-  github: #username
-  stackoverflow: #123456/username   from a "http://stackoverflow.com/users/123456/username" link
-  linkedin: #username
+  github: abinashk
+  stackoverflow: 1386495/abinash-koirala
+  linkedin: abinash
   xing: #username
   instagram: #username
   lastfm: #username
