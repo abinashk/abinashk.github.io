@@ -7,11 +7,9 @@ modified: 2016-02-16
 comments: true
 ---
 
-pg_dump is a very useful tool to create backups of your postgresql database. It is very straightforward to use in normal linux servers. But in case of Openshift, especially if your app gear and database gear are different, it can be a little bit tricky. I have stumbled around many times to figure this out. Following approach has worked for me every time.
+'pg_dump' is a very useful tool to create backups of your postgresql database. It is very straightforward to use in normal linux servers. But in case of Openshift, especially if your app gear and database gear are different, it can be a little bit tricky. I have stumbled around many times to figure this out. Following approach has worked for me every time.
 
-##First we should get the ssh address of the postgress gear. 
-
-For this we can use the 'rhc app show' command which lists the gears in your application and their ssh addresses. 
+First we should get the ssh address of the postgress gear. For this we can use the 'rhc app show' command which lists the gears in your application and their ssh addresses. 
 
 {% highlight shell %}
 rhc app show <app_name> --gears
@@ -19,7 +17,7 @@ rhc app show <app_name> --gears
 
 This will give you a list of gears in your app along with their ssh address. Copy the ssh address for your postgres gear. 
 
-Now you need to 'ssh' into that gear using 'rhc ssh' command:
+Now you need to 'ssh' into that gear using 'rhc ssh' command.
 
 {% highlight shell %}
 rhc ssh <ssh_address_of_postgres_gear>
