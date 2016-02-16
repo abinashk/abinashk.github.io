@@ -1,121 +1,47 @@
 ---
 layout: post
-title: Syntax Highlighting Post
-excerpt: "Demo post displaying the various ways of highlighting code in Markdown."
-tags: [sample post, code, highlighting]
-modified: 2016-02-01
+title: Backup Postgresql database to your local machine from Openshift server
+excerpt: "Simple way to create a backup of postgresql database in your Openshift server and download it to your local machine when the database gear is different from the head app gear."
+tags: [openshift, postgresql, backup]
+modified: 2016-02-16
 comments: true
 ---
 
-Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.[^1]
+pg_dump is a very useful tool to create backups of your postgresql database. It is very straightforward to use in normal linux servers. But in case of Openshift, especially if your app gear and database gear are different, it can be a little bit tricky. I have stumbled around many times to figure this out. Following approach has worked for me every time.
 
-[^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
+##First we should get the ssh address of the postgress gear. 
 
-### Highlighted Code Blocks
+For this we can use the 'rhc app show' command which lists the gears in your application and their ssh addresses. 
 
-To modify styling and highlight colors edit `/_sass/syntax.scss`.
-
-{% highlight css %}
-#container {
-    float: left;
-    margin: 0 -240px 0 0;
-    width: 100%;
-}
+{% highlight shell %}
+rhc app show <app_name> --gears
 {% endhighlight %}
 
-{% highlight html %}
-{% raw %}
-<nav class="pagination" role="navigation">
-    {% if page.previous %}
-        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-    {% endif %}
-    {% if page.next %}
-        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-    {% endif %}
-</nav><!-- /.pagination -->
-{% endraw %}
+This will give you a list of gears in your app along with their ssh address. Copy the ssh address for your postgres gear. 
+
+Now you need to 'ssh' into that gear using 'rhc ssh' command:
+
+{% highlight shell %}
+rhc ssh <ssh_address_of_postgres_gear>
 {% endhighlight %}
 
-{% highlight ruby %}
-module Jekyll
-  class TagIndex < Page
-    def initialize(site, base, dir, tag)
-      @site = site
-      @base = base
-      @dir = dir
-      @name = 'index.html'
-      self.process(@name)
-      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
-      self.data['tag'] = tag
-      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '
-      tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'
-      self.data['title'] = "#{tag_title_prefix}#{tag}"
-      self.data['description'] = "An archive of posts tagged #{tag}."
-    end
-  end
-end
+You'll be in the root directory of your gear. It is not a good idea to make a backup file in that directory. Every Openshift gears have a data directory
+which doesn't get wiped out in every deployment(all other directories get wiped clean in each deployment). So we'll use this data directory to create the backup file. First cd to the data dir.
+
+{% highlight shell %}
+cd /app-root/data
 {% endhighlight %}
 
+Now you can use 'pg_dump' command to create a backup.
 
-### Standard Code Block
+{% highlight shell %}
+pg_dump <database_name> > <backup_file_name>
+{% endhighlight %}
 
-    {% raw %}
-    <nav class="pagination" role="navigation">
-        {% if page.previous %}
-            <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-        {% endif %}
-        {% if page.next %}
-            <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-        {% endif %}
-    </nav><!-- /.pagination -->
-    {% endraw %}
+After this if you want to download the backup to your local machine then you can do 'scp' using the ssh address that you got in the first step. First you need to logout from the server 'Ctrl + c' or 'Ctrl + z' will log you out from the ssh session. Before logging out from the server you need to copy the full path of the backup file. Usually 'pwd' command can give you the full path of the folder and after adding the filename to that path it will be the full path of the file. Now, you need to log out of the server and use scp from the terminal in your machine.
 
+{% highlight shell %}
+scp <ssh_address_of_postgres_gear>:<full_path_of_backup_file> <destination_path_in_local_machine>
+{% endhighlight %}
 
-### Fenced Code Blocks
-
-To modify styling and highlight colors edit `/_sass/coderay.scss`. Line numbers and a few other things can be modified in `_config.yml`. Consult [Jekyll's documentation](http://jekyllrb.com/docs/configuration/) for more information.
-
-~~~ css
-#container {
-    float: left;
-    margin: 0 -240px 0 0;
-    width: 100%;
-}
-~~~
-
-~~~ html
-{% raw %}<nav class="pagination" role="navigation">
-    {% if page.previous %}
-        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-    {% endif %}
-    {% if page.next %}
-        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-    {% endif %}
-</nav><!-- /.pagination -->{% endraw %}
-~~~
-
-~~~ ruby
-module Jekyll
-  class TagIndex < Page
-    def initialize(site, base, dir, tag)
-      @site = site
-      @base = base
-      @dir = dir
-      @name = 'index.html'
-      self.process(@name)
-      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
-      self.data['tag'] = tag
-      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '
-      tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'
-      self.data['title'] = "#{tag_title_prefix}#{tag}"
-      self.data['description'] = "An archive of posts tagged #{tag}."
-    end
-  end
-end
-~~~
-
-### GitHub Gist Embed
-
-An example of a Gist embed below.
-
-{% gist mmistakes/6589546 %}
+This will download the backup file to the path that you entered as the destination.
