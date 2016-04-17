@@ -1,25 +1,24 @@
 ---
 layout: page
-title: About the Theme
-tags: [about, Jekyll, theme, responsive]
-modified: 2014-08-08T20:53:07.573882-04:00
+title: About Me
+tags: [about, abinash, koirala]
+modified: 2016-04-08T20:53:07.573882-04:00
 comments: true
 image:
-  feature: sample-image-2.jpg
-  credit: WeGraphics
-  creditlink: http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/
+  feature: header_home.jpg
+  credit: AbinashK
+  creditlink: #
 ---
 
-Minimal Mistakes is responsive Jekyll theme with large featured images and solid typography. As the name implies the styling is fairly minimal to make it easier for you to build on top of.
+I am a full stack web application developer. I have worked with a lot of opensource web technologies. I am currently pursuing Masters of Science in Information Technology at Rensselaer Polytechnic Institute concentrating in Data Science. I have professional experiences of working in each stages SDLC of enterprise web application. I love to work in small and multifunctional teams. I am currently interested in roles in which I can start off as a full-stack web developer and gradually get involved in Data Science and Analytics front. I like to call myself a data science apprentice.
 
-## Minimal Mistakes is all about:
+## Some of my projects(some of them have a link pointing to their github repo):
 
-* Responsive templates. Looking good on mobile, tablet, and desktop.
-* Gracefully degrading in older browsers. Compatible with Internet Explorer 8+ and all modern browsers.
-* Minimal embellishments -- content first.
-* Optional large feature images for posts and pages.
-* Simple and clear permalink structure.
-* [Custom 404 page](http://mmistakes.github.io/minimal-mistakes/404.html) to get you started.
-* Support for Disqus Comments
+* Accounting and Bookkeeping SaaS built using Django/Knockout/Postgres/Celery/Redis.
+* Social Media Polling app built using MERN stack.
+* Salesforce Analytics MVP using Node/Mongo/iPython.
+* Host Based Intrusion Detection System using Markovian Models and Self Organizing Maps.
+* Large scale social graph partitioning using Locality Sensitive Hashing.
+* Text clustering using Locality Sensitive Hashing.
+* Finding correlation between Lunar Cycles and Seismic activities using time-series analysis.
 
-<a markdown="0" href="{{ site.url }}/theme-setup" class="btn">Install Minimal Mistakes Theme</a>

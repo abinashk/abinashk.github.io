@@ -1,9 +1,9 @@
 ---
 layout: home
-excerpt: "A minimal Jekyll theme for your blog by designer Michael Rose."
-tags: [Jekyll, theme, responsive, blog, template]
+excerpt: "Personal website of Abinash Koirala built using Jekyll."
+tags: [Jekyll, personal website, responsive, blog]
 image:
-  feature: sample-image-1.jpg
+  feature: header_home.jpg
   credit: AbinashK
   creditlink: abinashk.github.io
 ---
